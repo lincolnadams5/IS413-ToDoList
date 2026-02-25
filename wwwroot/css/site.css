@@ -18,7 +18,8 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  /* flex layout handles footer spacing; no extra bottom margin needed */
+  margin-bottom: 0;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
