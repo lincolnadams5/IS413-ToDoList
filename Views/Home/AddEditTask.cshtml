@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Add/Edit Task";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>This page allows you to add or edit tasks in your to-do list:</p>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form>
+                <div class="row">
+                    <!-- Task (Required) -->
+                    <div class="col-12 mb-3">
+                        <label for="taskTitle" class="form-label">Task Title</label>
+                        <input type="text" class="form-control" id="taskTitle" placeholder="Enter task title" required>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-12 mb-3">
+                        <label for="taskDescription" class="form-label">Task Description</label>
+                        <textarea class="form-control" id="taskDescription" rows="3" placeholder="Enter task description"></textarea>
+                    </div>
+
+                    <!-- Quadrant (Required) -->
+                    <div class="col-md-6 mb-3">
+                        <label for="taskQuadrant" class="form-label">Quadrant</label>
+                        <select class="form-select" id="taskQuadrant" required>
+                            <option selected>Select quadrant</option>
+                            <option value="1">Quadrant 1: Urgent and Important</option>
+                            <option value="2">Quadrant 2: Not Urgent but Important</option>
+                            <option value="3">Quadrant 3: Urgent but Not Important</option>
+                            <option value="4">Quadrant 4: Not Urgent and Not Important</option>
+                        </select>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-md-6 mb-3">
+                        <label for="taskCategory" class="form-label">Category</label>
+                        <select class="form-select" id="taskCategory">
+                            <option selected>Select category</option>
+                            <option value="home">Home</option>
+                            <option value="school">School</option>
+                            <option value="work">Work</option>
+                            <option value="church">Church</option>
+                        </select>
+                    </div>
+
+                    <!-- Completed (T/F) -->
+                    <div class="col-12 mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="taskCompleted">
+                        <label class="form-check-label" for="taskCompleted">Completed</label>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

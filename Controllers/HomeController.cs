@@ -11,7 +11,12 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult Quadrants()
+    {
+        return View();
+    }
+
+    public IActionResult AddEditTask()
     {
         return View();
     }
