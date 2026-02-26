@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using IS413_ToDoList.Models;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<TaskDbContext>(Options => Options.UseSqlite(builder.Configuration.GetConnectionString("TaskConnection")));
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
 var app = builder.Build();
 
@@ -25,5 +31,16 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+using (var scope = app.Services.CreateScope())
+{
+    var repo = scope.ServiceProvider.GetRequiredService<ITaskRepository>();
+    var categories = repo.GetAllCategories();
+    foreach (var cat in categories)
+    {
+        Console.WriteLine($"Category: {cat.CategoryName}");
+    }
+}
 
 app.Run();
+
+
