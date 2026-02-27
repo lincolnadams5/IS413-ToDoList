@@ -6,6 +6,13 @@ namespace IS413_ToDoList.Controllers;
 
 public class HomeController : Controller
 {
+    private ITaskRepository _repo;
+
+    public HomeController(ITaskRepository temp)
+    {
+        _repo = temp;
+    }
+    
     public IActionResult Index()
     {
         return View();
@@ -13,7 +20,8 @@ public class HomeController : Controller
 
     public IActionResult Quadrants()
     {
-        return View();
+        var tasks = _repo.GetAllTasks();
+        return View(tasks);
     }
 
     public IActionResult AddEditTask()
@@ -26,4 +34,5 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+    
 }
