@@ -7,14 +7,13 @@ namespace IS413_ToDoList.Controllers;
 
 public class HomeController : Controller
 {
-    private TaskDbContext _context;
-    private TaskRepository repo;
-    
-    public HomeController(TaskDbContext temp)
+    private ITaskRepository _repo;
+
+    public HomeController(ITaskRepository temp)
     {
-        _context = temp;
-        repo = new TaskRepository(_context);
+        _repo = temp;
     }
+    
     public IActionResult Index()
     {
         return View();
@@ -22,7 +21,7 @@ public class HomeController : Controller
 
     public IActionResult Quadrants()
     {
-        IEnumerable<Task> tasks = repo.GetAllTasks();
+        var tasks = _repo.GetAllTasks();
         return View(tasks);
     }
 
@@ -45,4 +44,5 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+    
 }

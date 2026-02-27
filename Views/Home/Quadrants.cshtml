@@ -1,6 +1,103 @@
-﻿@{
+﻿@using System.Linq
+@using MyTask = IS413_ToDoList.Models.Task
+@model IEnumerable<MyTask>
+@{
     ViewData["Title"] = "To Do List Quadrants";
 }
 <h1>@ViewData["Title"]</h1>
 
 <p>This page displays a to-do list organized by Covey's Time Management Quadrants:</p>
+
+<h1 class="text-center mb-4">Task Quadrants</h1>
+
+<div class="container">
+
+    <!-- Row 1 -->
+    <div class="row">
+
+        <!-- Quadrant I -->
+        <div class="col-md-6 border p-3">
+            <h4>Quadrant I: Important / Urgent</h4>
+
+            @foreach (var t in Model.Where(x => x.Quadrant == "1" && x.Completed == false))
+            {
+                <div class="card mb-2 p-2">
+                    <strong>@t.TaskName</strong><br />
+                    Due: @t.Duedate?.ToShortDateString()<br />
+                    Category: @t.Category?.CategoryName
+
+                    <div class="mt-2">
+                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Quadrant II -->
+        <div class="col-md-6 border p-3">
+            <h4>Quadrant II: Important / Not Urgent</h4>
+
+            @foreach (var t in Model.Where(x => x.Quadrant == "2" && x.Completed == false))
+            {
+                <div class="card mb-2 p-2">
+                    <strong>@t.TaskName</strong><br />
+                    Due: @t.Duedate?.ToShortDateString()<br />
+                    Category: @t.Category?.CategoryName
+
+                    <div class="mt-2">
+                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row mt-4">
+
+        <!-- Quadrant III -->
+        <div class="col-md-6 border p-3">
+            <h4>Quadrant III: Not Important / Urgent</h4>
+
+            @foreach (var t in Model.Where(x => x.Quadrant == "3" && x.Completed == false))
+            {
+                <div class="card mb-2 p-2">
+                    <strong>@t.TaskName</strong><br />
+                    Due: @t.Duedate?.ToShortDateString()<br />
+                    Category: @t.Category?.CategoryName
+
+                    <div class="mt-2">
+                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Quadrant IV -->
+        <div class="col-md-6 border p-3">
+            <h4>Quadrant IV: Not Important / Not Urgent</h4>
+
+            @foreach (var t in Model.Where(x => x.Quadrant == "4" && x.Completed == false))
+            {
+                <div class="card mb-2 p-2">
+                    <strong>@t.TaskName</strong><br />
+                    Due: @t.Duedate?.ToShortDateString()<br />
+                    Category: @t.Category?.CategoryName
+
+                    <div class="mt-2">
+                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
