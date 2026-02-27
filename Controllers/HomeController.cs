@@ -34,7 +34,7 @@ public class HomeController : Controller
         }
         else
         {
-            task = repo.GetTaskById(id.Value);
+            task = _repo.GetTaskById(id.Value);
             return View(task);
         }
     }
