@@ -1,102 +1,140 @@
-﻿@using System.Linq
+@using System.Linq
 @using MyTask = IS413_ToDoList.Models.Task
 @model IEnumerable<MyTask>
 @{
     ViewData["Title"] = "To Do List Quadrants";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>This page displays a to-do list organized by Covey's Time Management Quadrants:</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Task Quadrants</h1>
+    <a asp-action="AddEditTask" class="btn btn-primary">+ Add Task</a>
+</div>
 
-<h1 class="text-center mb-4">Task Quadrants</h1>
+<p class="text-muted">Tasks organized by Covey's Time Management Matrix.</p>
 
-<div class="container">
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container-fluid px-0">
 
     <!-- Row 1 -->
-    <div class="row">
+    <div class="row g-3">
 
         <!-- Quadrant I -->
-        <div class="col-md-6 border p-3">
-            <h4>Quadrant I: Important / Urgent</h4>
-
-            @foreach (var t in Model.Where(x => x.Quadrant == "1" && x.Completed == false))
-            {
-                <div class="card mb-2 p-2">
-                    <strong>@t.TaskName</strong><br />
-                    Due: @t.Duedate?.ToShortDateString()<br />
-                    Category: @t.Category?.CategoryName
-
-                    <div class="mt-2">
-                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
-                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
-                    </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Quadrant I: Urgent &amp; Important</h5>
                 </div>
-            }
+                <div class="card-body">
+                    @foreach (var t in Model.Where(x => x.Quadrant == "1" && x.Completed == false))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body py-2 px-3">
+                                <strong>@t.TaskName</strong>
+                                <div class="text-muted small">
+                                    @if (t.Duedate != null) { <span>Due: @t.Duedate?.ToShortDateString()</span> }
+                                    @if (t.Category != null) { <span class="ms-2">@t.Category?.CategoryName</span> }
+                                </div>
+                                <div class="mt-2">
+                                    <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
+                                    <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm" onclick="return confirm('Mark this task as completed?')">Complete</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
 
         <!-- Quadrant II -->
-        <div class="col-md-6 border p-3">
-            <h4>Quadrant II: Important / Not Urgent</h4>
-
-            @foreach (var t in Model.Where(x => x.Quadrant == "2" && x.Completed == false))
-            {
-                <div class="card mb-2 p-2">
-                    <strong>@t.TaskName</strong><br />
-                    Due: @t.Duedate?.ToShortDateString()<br />
-                    Category: @t.Category?.CategoryName
-
-                    <div class="mt-2">
-                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
-                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
-                    </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Quadrant II: Not Urgent &amp; Important</h5>
                 </div>
-            }
+                <div class="card-body">
+                    @foreach (var t in Model.Where(x => x.Quadrant == "2" && x.Completed == false))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body py-2 px-3">
+                                <strong>@t.TaskName</strong>
+                                <div class="text-muted small">
+                                    @if (t.Duedate != null) { <span>Due: @t.Duedate?.ToShortDateString()</span> }
+                                    @if (t.Category != null) { <span class="ms-2">@t.Category?.CategoryName</span> }
+                                </div>
+                                <div class="mt-2">
+                                    <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
+                                    <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm" onclick="return confirm('Mark this task as completed?')">Complete</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="row mt-4">
 
         <!-- Quadrant III -->
-        <div class="col-md-6 border p-3">
-            <h4>Quadrant III: Not Important / Urgent</h4>
-
-            @foreach (var t in Model.Where(x => x.Quadrant == "3" && x.Completed == false))
-            {
-                <div class="card mb-2 p-2">
-                    <strong>@t.TaskName</strong><br />
-                    Due: @t.Duedate?.ToShortDateString()<br />
-                    Category: @t.Category?.CategoryName
-
-                    <div class="mt-2">
-                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
-                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
-                    </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Quadrant III: Urgent &amp; Not Important</h5>
                 </div>
-            }
+                <div class="card-body">
+                    @foreach (var t in Model.Where(x => x.Quadrant == "3" && x.Completed == false))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body py-2 px-3">
+                                <strong>@t.TaskName</strong>
+                                <div class="text-muted small">
+                                    @if (t.Duedate != null) { <span>Due: @t.Duedate?.ToShortDateString()</span> }
+                                    @if (t.Category != null) { <span class="ms-2">@t.Category?.CategoryName</span> }
+                                </div>
+                                <div class="mt-2">
+                                    <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
+                                    <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm" onclick="return confirm('Mark this task as completed?')">Complete</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
 
         <!-- Quadrant IV -->
-        <div class="col-md-6 border p-3">
-            <h4>Quadrant IV: Not Important / Not Urgent</h4>
-
-            @foreach (var t in Model.Where(x => x.Quadrant == "4" && x.Completed == false))
-            {
-                <div class="card mb-2 p-2">
-                    <strong>@t.TaskName</strong><br />
-                    Due: @t.Duedate?.ToShortDateString()<br />
-                    Category: @t.Category?.CategoryName
-
-                    <div class="mt-2">
-                        <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm">Delete</a>
-                        <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm">Complete</a>
-                    </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Quadrant IV: Not Urgent &amp; Not Important</h5>
                 </div>
-            }
+                <div class="card-body">
+                    @foreach (var t in Model.Where(x => x.Quadrant == "4" && x.Completed == false))
+                    {
+                        <div class="card mb-2">
+                            <div class="card-body py-2 px-3">
+                                <strong>@t.TaskName</strong>
+                                <div class="text-muted small">
+                                    @if (t.Duedate != null) { <span>Due: @t.Duedate?.ToShortDateString()</span> }
+                                    @if (t.Category != null) { <span class="ms-2">@t.Category?.CategoryName</span> }
+                                </div>
+                                <div class="mt-2">
+                                    <a asp-action="AddEditTask" asp-route-id="@t.TaskId" class="btn btn-warning btn-sm">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@t.TaskId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a>
+                                    <a asp-action="MarkComplete" asp-route-id="@t.TaskId" class="btn btn-success btn-sm" onclick="return confirm('Mark this task as completed?')">Complete</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
 
     </div>
