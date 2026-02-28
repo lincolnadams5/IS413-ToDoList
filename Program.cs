@@ -33,6 +33,10 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
+
+    var context = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
+    context.Database.Migrate();
+
     var repo = scope.ServiceProvider.GetRequiredService<ITaskRepository>();
     var categories = repo.GetAllCategories();
     foreach (var cat in categories)
