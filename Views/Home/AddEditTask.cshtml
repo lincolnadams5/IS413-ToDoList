@@ -18,7 +18,7 @@
                         <!-- Task (Required) -->
                         <div class="col-12 mb-3">
                             <label asp-for="TaskName" class="form-label">Task Title</label>
-                            <input asp-for="TaskName" class="form-control" placeholder="Enter task title" />
+                            <input asp-for="TaskName" class="form-control" placeholder="Enter task title" required/>
                             <span asp-validation-for="TaskName" class="text-danger"></span>
                         </div>
 
@@ -31,8 +31,7 @@
                         <!-- Quadrant (Required) -->
                         <div class="col-md-6 mb-3">
                             <label asp-for="Quadrant" class="form-label">Quadrant</label>
-                            <select asp-for="Quadrant" class="form-select">
-                                <option value="">Select quadrant</option>
+                            <select asp-for="Quadrant" class="form-select" placeholder="Select quadrant" required>
                                 <option value="1">Quadrant 1: Urgent and Important</option>
                                 <option value="2">Quadrant 2: Not Urgent but Important</option>
                                 <option value="3">Quadrant 3: Urgent but Not Important</option>
@@ -43,8 +42,7 @@
                         <!-- Category -->
                         <div class="col-md-6 mb-3">
                             <label asp-for="CategoryId" class="form-label">Category</label>
-                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
-                                <option value="">Select category</option>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" placeholder="Select category" class="form-select" required>
                             </select>
                         </div>
 
