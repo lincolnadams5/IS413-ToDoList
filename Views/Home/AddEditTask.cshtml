@@ -1,63 +1,66 @@
+@model IS413_ToDoList.Models.Task
 @{
-    ViewData["Title"] = "Add/Edit Task";
+    ViewData["Title"] = Model.TaskId == 0 ? "Add Task" : "Edit Task";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>This page allows you to add or edit tasks in your to-do list:</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">@ViewData["Title"]</h1>
+    <a asp-action="Quadrants" class="btn btn-outline-secondary">Cancel</a>
+</div>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <form>
-                <div class="row">
-                    <!-- Task (Required) -->
-                    <div class="col-12 mb-3">
-                        <label for="taskTitle" class="form-label">Task Title</label>
-                        <input type="text" class="form-control" id="taskTitle" placeholder="Enter task title" required>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="AddEditTask" asp-controller="Home" method="post">
+                    <input type="hidden" asp-for="TaskId" />
+                    <div class="row">
+                        <!-- Task (Required) -->
+                        <div class="col-12 mb-3">
+                            <label asp-for="TaskName" class="form-label">Task Title</label>
+                            <input asp-for="TaskName" class="form-control" placeholder="Enter task title" />
+                            <span asp-validation-for="TaskName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Due Date -->
+                        <div class="col-12 mb-3">
+                            <label asp-for="Duedate" class="form-label">Due Date</label>
+                            <input asp-for="Duedate" type="date" class="form-control" />
+                        </div>
+
+                        <!-- Quadrant (Required) -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Quadrant" class="form-label">Quadrant</label>
+                            <select asp-for="Quadrant" class="form-select">
+                                <option value="">Select quadrant</option>
+                                <option value="1">Quadrant 1: Urgent and Important</option>
+                                <option value="2">Quadrant 2: Not Urgent but Important</option>
+                                <option value="3">Quadrant 3: Urgent but Not Important</option>
+                                <option value="4">Quadrant 4: Not Urgent and Not Important</option>
+                            </select>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CategoryId" class="form-label">Category</label>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
+                                <option value="">Select category</option>
+                            </select>
+                        </div>
+
+                        <!-- Completed (T/F) -->
+                        <div class="col-12 mb-3 form-check ms-1">
+                            <input asp-for="Completed" class="form-check-input" />
+                            <label asp-for="Completed" class="form-check-label">Completed</label>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Save Task</button>
+                        </div>
                     </div>
-
-                    <!-- Description -->
-                    <div class="col-12 mb-3">
-                        <label for="taskDescription" class="form-label">Task Description</label>
-                        <textarea class="form-control" id="taskDescription" rows="3" placeholder="Enter task description"></textarea>
-                    </div>
-
-                    <!-- Quadrant (Required) -->
-                    <div class="col-md-6 mb-3">
-                        <label for="taskQuadrant" class="form-label">Quadrant</label>
-                        <select class="form-select" id="taskQuadrant" required>
-                            <option selected>Select quadrant</option>
-                            <option value="1">Quadrant 1: Urgent and Important</option>
-                            <option value="2">Quadrant 2: Not Urgent but Important</option>
-                            <option value="3">Quadrant 3: Urgent but Not Important</option>
-                            <option value="4">Quadrant 4: Not Urgent and Not Important</option>
-                        </select>
-                    </div>
-
-                    <!-- Category -->
-                    <div class="col-md-6 mb-3">
-                        <label for="taskCategory" class="form-label">Category</label>
-                        <select class="form-select" id="taskCategory">
-                            <option selected>Select category</option>
-                            <option value="home">Home</option>
-                            <option value="school">School</option>
-                            <option value="work">Work</option>
-                            <option value="church">Church</option>
-                        </select>
-                    </div>
-
-                    <!-- Completed (T/F) -->
-                    <div class="col-12 mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="taskCompleted">
-                        <label class="form-check-label" for="taskCompleted">Completed</label>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Save Task</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -1,10 +1,10 @@
-﻿@{
+@{
     ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
+<div class="text-center mt-4">
     <h1 class="display-4">Welcome</h1>
-    <p>This is Covey's To Do List application.</p>
-    <br>
-    <a>View the <a asp-area="" asp-controller="Home" asp-action="Quadrants">Quadrants</a> page to see the 4 quadrants of time management.</a>
+    <p class="lead">This is Covey's To Do List application.</p>
+    <a asp-controller="Home" asp-action="Quadrants" class="btn btn-primary me-2">View Quadrants</a>
+    <a asp-controller="Home" asp-action="AddEditTask" class="btn btn-outline-primary">Add a Task</a>
 </div>
